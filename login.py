@@ -7,13 +7,14 @@ def hi():
     return render_template('work.html')
 @app.route('/endd',methods=["GET","POST"])
 def helo():
+    e=None
     if request.method=="POST":
         x=request.form.to_dict()
         if x is None:
-            return "error",404
+            e="Try again"
         else:
             return redirect(url_for('hi'))
-    return render_template('signup.html')
+    return render_template('signup.html',err=e)
 
 if __name__=='__main__':
     app.run(debug=True)
