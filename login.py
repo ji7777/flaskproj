@@ -14,7 +14,7 @@ def helo():
             e="Try again"
         else:
             return redirect(url_for('hi'))
-    return render_template('signup.html',err=e)
+    return render_template('signup.html',e=e)
 
 if __name__=='__main__':
     app.run(debug=True)
