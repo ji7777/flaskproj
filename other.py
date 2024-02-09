@@ -11,3 +11,8 @@ cur=con.cursor()
 x=cur.execute("select * from exp_login")
 y=x.fetchall()
 print(y)
+def inser_new(a,b):
+    cur.execute('insert into exp_login values(?,?)',(a,b))
+    con.commit()
+cur.close()
+con.close()
