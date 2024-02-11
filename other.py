@@ -15,9 +15,6 @@ warehouse=os.environ.get('warehouse'),
 database=os.environ.get('database'),
 schema=os.environ.get('schema'))
 cur=con.cursor()
-x=cur.execute("select * from exp_login")
-y=x.fetchall()
-print(y)
 class expense:
     def __init__(self,uid):
         self.uid=uid
@@ -36,7 +33,6 @@ class expense:
             self.rec=0
         elif self.cost=='':
             self.cost=0
-        print(self.desc,self.cost,self.rec)
         t=dt.date.today().isoformat()
         cur.execute('insert into expense values(%s,%s,%s,%s,%s)',(self.desc,self.cost,self.uid,self.rec,t))
         con.commit()
@@ -75,20 +71,11 @@ class expense:
         fig1 = plt.figure(1,facecolor='lightgrey')
         w = 0.5
         grouped_data = d.groupby('date').sum().reset_index()
-        print(grouped_data)
-# Get the unique dates and their corresponding indices
         dates = np.arange(len(grouped_data['date']))
 
 # Plot the bars using the grouped data
         plt.bar(dates, grouped_data['cost'], w, label="cost")
         plt.bar(dates+w, grouped_data['rec'], w, label="rec")
-        # Calculate positions for bars
-        # dates = np.arange(len(d['date'].unique().astype('str').tolist()))
-        # print(dates,len(d['cost']),len(d['rec']),d['date'])
-        # plt.bar(dates, d['cost'], w, label="cost")
-        # plt.bar(dates + w, d['rec'], w, label="rec")
-
-        # Plot expected salary
         if not d.empty:
             x = d['salary'].iloc[0]
             plt.axhline(x, color='r', linestyle='--', label="expected")

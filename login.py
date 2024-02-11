@@ -38,7 +38,6 @@ def helo():
         else:
             err=e
             uid=None
-        print(err)
     return render_template('signup.html',e=err,i="sign up",uid=uid)
 @app.route('/home',methods=["GET","POST"])
 def ok():
@@ -52,27 +51,15 @@ def ok():
         x=request.form["expense"]
         y=request.form["cost"]
         r=request.form["rec"]
-        print(session)
         f=session['uid']
         z.insert_exp(x,y,r)
-        print("DATA INSERTED")
         return redirect(url_for('ok'))
     i,data=z.view()
     z.viz()
-        
-    
-    print(session,i,data)
     if 'uid' not in session:
         return redirect(url_for('log'))
     
     return render_template('homepage.html',uid=f,i="expense calc",u=u,rem=i,data=data)
-
-    # z=session.get("obj")
-        
-    # u=pickle.loads(z)
-            
-    # print(session)
-    # f=session.get('uid',None)
     
 @app.route('/logout')
 def log():
