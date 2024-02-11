@@ -1,6 +1,58 @@
 {% include 'main.html' %}
-<body>
-    <ul>
-        <li>Enter</li>
-    </ul>
+<body class="new1">
+    <div class="container">
+        <div class="cont1">
+            <h1 class="mb-4">Add your expenses</h1>
+            <h2>Your salary is {{ data.salary.iloc[0] }}</h2>
+            <h2>Your uid: {{ uid }}</h2>
+            <h2>Remaining salary: {{ rem }}</h2>
+        </div>
+        <div class="d-flex justify-content-end mb-3">
+            <a href="{{ url_for('log') }}" class="btn btn-danger">Logout</a>
+        </div>
+        <form action="/home" method="POST" class="cont1">
+            <div class="mb-3">
+                <label for="expense" style="color: white;">Expense</label>
+                <input name="expense" type="text" class="form-control" placeholder="Description">
+            </div>
+            <div class="mb-3">
+                <input name="cost" type="number" class="form-control" placeholder="Money spent" step="0.01">
+            </div>
+            <div class="mb-3">
+                <input name="rec" type="number" class="form-control" placeholder="Money Received" step="0.01">
+            </div>
+            <input type="submit" value="Add" name="add" class="btn btn-success">
+        </form>
+        <div class="table-responsive overflow-auto" style="background-color: aliceblue;">
+            <h2>History of expenses</h2>
+            {% if data is not none %}
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Description</th>
+                        <th scope="col">Cost</th>
+                        <th scope="col">Received</th>
+                        <th scope="col">Remaining Balance</th>
+                        <th scope="col">Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for index, row in data.iterrows() %}
+                    <tr>
+                        <td>{{ row['desc'] }}</td>
+                        <td>{{ row['cost'] }}</td>
+                        <td>{{ row['rec'] }}</td>
+                        <td>{{ row['rem'] }}</td>
+                        <td>{{ row['date'] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+        </div>
+        <div>
+            <img src="{{url_for('static',filename='new.png')}}" alt="total expense" class="img-fluid rounded mx-auto d-block mt-3" style="max-width: 80%; height: auto;">
+        </div>
+    </div>
 </body>
+</html>
